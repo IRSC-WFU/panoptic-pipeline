@@ -2,3 +2,6 @@ images
 data
 UPSNet
 .git
+graphics
+logs
+*.json
