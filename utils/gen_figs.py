@@ -51,20 +51,6 @@ def pull_full_pq(filename):
     df = pd.DataFrame.from_dict(metrics, orient = 'index', columns=['PQ', 'SQ', 'RQ', 'N'])
     return df
     
-'''
-2021-04-14 06:47:15,067 | coco.py    | line 266: IU_array:
-2021-04-14 06:47:15,067 | coco.py    | line 268: 0.80758
-2021-04-14 06:47:15,067 | coco.py    | line 268: 0.61407
-2021-04-14 06:47:15,068 | coco.py    | line 268: 0.00000
-2021-04-14 06:47:15,068 | coco.py    | line 268: 0.91046
-2021-04-14 06:47:15,068 | coco.py    | line 268: 0.91289
-2021-04-14 06:47:15,068 | coco.py    | line 268: 0.61051
-2021-04-14 06:47:15,068 | coco.py    | line 268: 0.00000
-2021-04-14 06:47:15,068 | coco.py    | line 268: 0.40115
-2021-04-14 06:47:15,068 | coco.py    | line 268: 0.38962
-2021-04-14 06:47:15,068 | coco.py    | line 268: 0.00000
-2021-04-14 06:47:15,068 | coco.py    | line 268: 0.46774'''
-
 def pull_IU(filename,n):
     with open(filename, 'r') as f:
         content = f.read()
@@ -81,9 +67,14 @@ def pull_IU(filename,n):
 
 
 if __name__ == '__main__':
-    filename = '/deac/generalGrp/paucaGrp/dark_mining/UPSNet/output/upsnet/mining_resnet101/upsnet_resnet101_mine_2gpu/val2017/upsnet_resnet101_mine_2gpu_2021-04-14-06-46.log'
-    top_dir = os.path.join(os.getcwd(), 'graphics')
-    catfile = '/deac/generalGrp/paucaGrp/dark_mining/UPSNet/data/coco/annotations/panoptic_coco_categories_stff.json'
+    parse = argparse.ArgumentParser()
+    parse.add_argument("-f","--filename",dest="filename",help="UPSNet Log File Path")
+    parse.add_argument("-o","--output",dest="output",help="Parent Directory for graphics Directory", default=os.getcwd())
+    args = parse.parse_args()
+
+    filename = args.filename
+    top_dir = os.path.join(args.output, 'graphics')
+    catfile = os.path.join(os.getcwd(), 'UPSNet/data/coco/annotations/panoptic_coco_categories_stff.json')
 
     if not os.path.exists(top_dir):
         os.makedirs(top_dir)

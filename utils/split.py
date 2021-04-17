@@ -10,13 +10,22 @@ import shutil
 import pandas as pd
 import json
 from sklearn.model_selection import train_test_split
+import argparse
 
 if __name__ == '__main__':
-    base_dir = 'images'
+    parse = argparse.ArgumentParser()
+    parse.add_argument("-b","--base",dest="base",help="Base Directory Name", default='images')
+    parse.add_argument("-t","--target",dest="target",help="Target Directory Name", default='data')
+    parse.add_argument("-c","--categories",dest="categories",help="Categories JSON File", default='panoptic_coco_categories.json')
+    parse.add_argument("-s","--seed",dest="seed",help="Random Seed to Use", default=42)
+    args = parse.parse_args()
+
+
+    base_dir = 
     target_dir = 'data'
     seed = 42
 
-    with open('panoptic_coco_categories.json', 'r') as f:
+    with open(args.categories, 'r') as f:
         CATEGORIES = json.load(f)
 
     cat_list = [x['name'] for x in CATEGORIES]
