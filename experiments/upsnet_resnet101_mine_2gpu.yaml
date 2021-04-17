@@ -1,0 +1,87 @@
+---
+output_path: "./output/upsnet/mining_resnet101"
+model_prefix: "upsnet_resnet101_mine_coco_"
+symbol: resnet_101_upsnet
+gpus: '0,1'
+#debug_mode: True
+
+dataset:
+  num_classes: 8
+  num_seg_classes: 11
+  dataset: coco
+  dataset_path: "./data/coco/"
+  image_set: train2017
+  root_path: "./data"
+  test_image_set: val2017
+
+network:
+  has_rpn: true
+  rpn_with_norm: "group_norm" # added by RL
+  has_rcnn: true
+  rcnn_with_norm: "group_norm" # added by RL
+  has_mask_head: true
+  has_fcn_head: true
+  fcn_head: "FCNHead"
+  fcn_with_norm: "group_norm" # added by RL
+  has_panoptic_head: true
+  pretrained: "./model/pretrained_model/resnet-101-caffe.pth" 
+  #pretrained: "./output/upsnet/coco/upsnet_resnet101_mine_2gpu/train2017/upsnet_resnet101_mine_coco_10000.pth" 
+  fpn_with_gap: true
+  fpn_with_norm: "group_norm" # added by RL
+  use_syncbn: True
+
+train:
+  use_horovod: false
+  scales:
+  - 800
+  - 832
+  - 864
+  - 896
+  - 928
+  - 960
+  - 992
+  - 1024
+  #- 800
+  max_size: 2048 #1333
+  # solver
+  display_iter: 20
+  snapshot_step: 1000 #2000
+  resume: false
+  begin_iteration: 0
+  max_iteration: 30000 #15000 #90000
+  decay_iteration:
+  - 20000
+  - 25000
+  #- 60000
+  #- 13000 #80000
+  warmup_iteration: 1500 #500 #1500
+  #lr: 0.02
+  lr: 0.0001
+  wd: 0.0001
+  momentum: 0.9
+  batch_size: 1
+
+  fcn_loss_weight: 0.2
+  fcn_with_roi_loss: true
+  panoptic_loss_weight: 0.1
+  panoptic_box_keep_fraction: 0.7
+
+  eval_data: true
+
+test:
+  scales:
+  - 800
+  - 832
+  - 864
+  - 896
+  - 928
+  - 960
+  - 992
+  - 1024
+  #- 800
+  max_size: 2048 #1333
+  batch_size: 1
+  test_iteration: 22000 #15000
+  panoptic_stuff_area_limit: 1024 #4096
+  vis_mask: false #true
+
