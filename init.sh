@@ -21,9 +21,9 @@ cd $TOP
 
 cp $TOP/utils/upsnet-custom/base_dataset.py $TOP/UPSNet/upsnet/dataset/base_dataset.py
 
-cp $TOP/utils/upsnet-custom/init_dataset.sh $TOP/UPSNet/upsnet/init_dataset.sh
+cp $TOP/utils/upsnet-custom/init_dataset.sh $TOP/UPSNet/init_dataset.sh
 
-cp $TOP/utils/upsnet-custom/init_dataset.py $TOP/UPSNet/upsnet/init_dataset.py
+cp $TOP/utils/upsnet-custom/init_dataset.py $TOP/UPSNet/init_dataset.py
 
 cp $TOP/utils/upsnet-custom/upsnet_end2end_test.py $TOP/UPSNet/upsnet/upsnet_end2end_test.py
 

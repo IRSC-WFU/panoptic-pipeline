@@ -21,9 +21,9 @@ if __name__ == '__main__':
     args = parse.parse_args()
 
 
-    base_dir = 
-    target_dir = 'data'
-    seed = 42
+    base_dir = args.base
+    target_dir = args.target
+    seed = args.seed
 
     with open(args.categories, 'r') as f:
         CATEGORIES = json.load(f)
@@ -50,10 +50,10 @@ if __name__ == '__main__':
     print('Making directories')
     for curr_split in ['train', 'val', 'test']:
         print('\tMaking ' + curr_split + ' split')
-        if not os.path.exists(target_dir + '/' + curr_split + '/images'):
-            os.makedirs(target_dir + '/' + curr_split + '/images')
-        if not os.path.exists(target_dir + '/' + curr_split + '/annotations'):
-            os.makedirs(target_dir + '/' + curr_split + '/annotations')
+        if not os.path.exists(os.path.join(target_dir, curr_split,'images')):
+            os.makedirs(os.path.join(target_dir, curr_split,'images'))
+        if not os.path.exists(os.path.join(target_dir, curr_split,'annotations')):
+            os.makedirs(os.path.join(target_dir, curr_split,'annotations'))
 
     train_images, val_images = train_test_split(os.listdir(os.path.join(base_dir, 'images')), test_size=0.40, shuffle=True, random_state=seed)
     val_images, test_images = train_test_split(val_images, test_size=0.20, shuffle=True, random_state=seed)
@@ -84,15 +84,15 @@ if __name__ == '__main__':
         dest_dir = target_dir + '/' + curr_split
 
         for img in curr_images:
-            image_dir = './images/images/'
-            shutil.copyfile((os.path.join(image_dir,img)), dest_dir + '/images/' + os.path.basename(img))
+            image_dir = os.path.join(base_dir, 'images')
+            shutil.copyfile((os.path.join(image_dir,img)), os.path.join(dest_dir,'images', os.path.basename(img)))
             
         
 
         for img in curr_ann:
-            anno_dir = './images/annotations/'
+            anno_dir = os.path.join(base_dir, 'annotations')
             if os.path.basename(img).split('_')[1] in cat_list:
-                shutil.copyfile((os.path.join(anno_dir,img)), dest_dir + '/annotations/' + os.path.basename(img))
+                shutil.copyfile((os.path.join(anno_dir,img)), os.path.join(dest_dir, 'annotations', os.path.basename(img)))
                 data_dict[curr_split][cat_list.index(os.path.basename(img).split('_')[1])]+= 1
            
     cat_df = pd.DataFrame(data_dict, index=cat_list)

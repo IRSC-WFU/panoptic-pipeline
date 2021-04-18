@@ -6,14 +6,14 @@ BASE=$TOP
 COCO=$TOP/UPSNet/data/coco
 
 # Convert Coco Files
-python coco_convert.py -b train
-python coco_convert.py -b val
-python coco_convert.py -b test
+python $TOP/utils/coco_convert.py -b train
+python $TOP/utils/coco_convert.py -b val
+python $TOP/utils/coco_convert.py -b test
 
 # Convert to Panoptic Files
-python pixelMap.py -b train
-python pixelMap.py -b val
-python pixelMap.py -b test
+python $TOP/utils/pixelMap.py -b train
+python $TOP/utils/pixelMap.py -b val
+python $TOP/utils/pixelMap.py -b test
 
 # Make Directories
 mkdir -p $COCO

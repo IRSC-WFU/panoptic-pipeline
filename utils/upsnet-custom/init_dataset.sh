@@ -1,24 +1,12 @@
-# PYTHONPATH=$(pwd)/lib/dataset_devkit:$(pwd)/lib/dataset_devkit/panopticapi:$PYTHONPATH python lib/dataset_devkit/panopticapi/converters/detection2panoptic_coco_format.py \
-#   --input_json_file data/coco/annotations/coco_train.json \
-#   --output_json_file data/coco/annotations/panoptic_train2017.json \
-#   --categories_json_file data/coco/annotations/panoptic_coco_categories.json \
-#   --segmentations_folder data/coco/annotations/panoptic_train2017
+#!/bin/bash
 
-# PYTHONPATH=$(pwd)/lib/dataset_devkit:$(pwd)/lib/dataset_devkit/panopticapi:$PYTHONPATH python lib/dataset_devkit/panopticapi/converters/detection2panoptic_coco_format.py \
-#   --input_json_file data/coco/annotations/coco_val.json \
-#   --output_json_file data/coco/annotations/panoptic_val2017.json \
-#   --categories_json_file data/coco/annotations/panoptic_coco_categories.json \
-#   --segmentations_folder data/coco/annotations/panoptic_val2017
+cd UPSNet
 
 ##################################
 # Run Initializing Python Script #
 ##################################
 
-python init_mining.py
-
-
-#cp data/coco/annotations/coco_train.json data/coco/annotations/instances_train2017.json
-#cp data/coco/annotations/coco_val.json data/coco/annotations/instances_val2017.json
+python init_dataset.py
 
 ###############################
 # Pull Semantic from Panoptic #
