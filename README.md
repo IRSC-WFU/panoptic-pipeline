@@ -4,6 +4,8 @@
 This repository exists to take the UPSNet Panoptic Segmentation algorithm and allow a user to build and run it quickly on a new dataset. It was made as an extension of the [UPSNet](https://github.com/uber-research/UPSNet) repository.
 
 # License
+Code in `panoptic-pipeline/utils/upsnet-custom` is offered under © Uber, 2018-2019. Licensed under the Uber Non-Commercial License.
+All other code is made availible under 
 
 # Citing panoptic-pipeline
 
@@ -64,8 +66,8 @@ Make sure UPSNet is installed and initialized as described in [installation](#in
 4. Run `utils/split.py` to create a train-val-test split on the dataset.
 5. Run `bash utils/link.sh` to generate important JSON files, move them, and symlink the generated data.
 6. Run `bash UPSNET/init_dataset.sh`.
-7. Run `bash slurm/panoptic.slurm` to train the model. Please be sure to modify `CUDA_VISIBLE_DEVICES` and the shapes config file in `panoptic-pipelines/experiments` to reflect your system.
-8. Run `bash slurm/panoptic_test.slurm` to train the model. Please be sure to modify `CUDA_VISIBLE_DEVICES` and the shapes config file in `panoptic-pipelines/experiments` to reflect your system.
+7. Run `bash slurm/panoptic.slurm` to train the model. Please be sure to modify `CUDA_VISIBLE_DEVICES` and the mining config file in `panoptic-pipelines/experiments` to reflect your system.
+8. Run `bash slurm/panoptic_test.slurm` to train the model. Please be sure to modify `CUDA_VISIBLE_DEVICES` and the mining config file in `panoptic-pipelines/experiments` to reflect your system.
 
 # Examples: COCO and Cityscapes
 Please see the [UPSNet](https://github.com/uber-research/UPSNet) repository and documentation for how to test on COCO and Cityscapes data. Note that this is much more challenging and is not recommended for beginners or those without Linux experience.
@@ -79,9 +81,12 @@ Make sure UPSNet is installed and initialized as described in [installation](#in
 4. Run `utils/split.py` to create a train-val-test split on the dataset.
 5. Run `bash utils/link.sh` to generate important JSON files, move them, and symlink the generated data.
 6. Run `bash UPSNET/init_dataset.sh`.
-7. Run `bash slurm/panoptic.slurm` to train the model. Please be sure to modify `CUDA_VISIBLE_DEVICES` and the shapes config file in `panoptic-pipelines/experiments` to reflect your system.
-8. Run `bash slurm/panoptic_test.slurm` to train the model. Please be sure to modify `CUDA_VISIBLE_DEVICES` and the shapes config file in `panoptic-pipelines/experiments` to reflect your system.
+7. Run `bash slurm/panoptic.slurm` to train the model. Please be sure to modify `CUDA_VISIBLE_DEVICES` and a custom config file in `panoptic-pipelines/experiments` to reflect your system and classes.
+8. Run `bash slurm/panoptic_test.slurm` to train the model. Please be sure to modify `CUDA_VISIBLE_DEVICES` and a custom config file in `panoptic-pipelines/experiments` to reflect your system and classes.
+
+# Troubleshooting
+There are several common issues that we found in our testing with errors that are not obvious. As such, we have decided to add them in `TROUBLESHOOTING.md`. If you discover an issue not currently in `TROUBLESHOOTING.md`, please open an issue. If you discover a solution, please consider adding it to `TROUBLESHOOTING.md`, so the entire community can benefit from the discovery.
 
 # Authors
-- [@rlangefe](https://github.com/rlangefe) - 
-- [@LexieKatherine](https://github.com/LexieKatherine) - 
+- [@rlangefe](https://github.com/rlangefe) - Robert Langefeld (Wake Forest University)
+- [@LexieKatherine](https://github.com/LexieKatherine) - Katherine Wang (Wake Forest University)
