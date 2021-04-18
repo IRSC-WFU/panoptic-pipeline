@@ -1,4 +1,4 @@
-# panoptic-pipeline: End-to-End Pipeline UPSNet Panoptic Segmentation on a Custom Dataset
+# Panoptic Pipeline: End-to-End Pipeline UPSNet Panoptic Segmentation on a Custom Dataset
 
 # Introduction
 This repository exists to take the UPSNet Panoptic Segmentation algorithm and allow a user to build and run it quickly on a new dataset. It was made as an extension of the [UPSNet](https://github.com/uber-research/UPSNet) repository.
