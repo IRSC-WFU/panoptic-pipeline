@@ -1,6 +1,7 @@
 import os
 import json
 import re
+import argparse
 
 import numpy as np
 import pandas as pd
@@ -70,11 +71,12 @@ if __name__ == '__main__':
     parse = argparse.ArgumentParser()
     parse.add_argument("-f","--filename",dest="filename",help="UPSNet Log File Path")
     parse.add_argument("-o","--output",dest="output",help="Parent Directory for graphics Directory", default=os.getcwd())
+    parse.add_argument("-c","--category",dest="category",help="Category file", default=os.path.join(os.getcwd(), 'UPSNet/data/coco/annotations/panoptic_coco_categories_stff.json'))
     args = parse.parse_args()
 
     filename = args.filename
     top_dir = os.path.join(args.output, 'graphics')
-    catfile = os.path.join(os.getcwd(), 'UPSNet/data/coco/annotations/panoptic_coco_categories_stff.json')
+    catfile = args.category
 
     if not os.path.exists(top_dir):
         os.makedirs(top_dir)
