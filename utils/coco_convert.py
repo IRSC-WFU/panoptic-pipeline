@@ -53,7 +53,7 @@ if __name__ == "__main__":
     parse.add_argument("-s","--source",dest="source",help="source directory name",default='annotations')
     args = parse.parse_args()
 
-    ROOT_DIR = 'data/' + str(args.batch)
+    ROOT_DIR = os.path.join('data', str(args.batch))
     IMAGE_DIR = os.path.join(ROOT_DIR, "images")
     ANNOTATION_DIR = os.path.join(ROOT_DIR, str(args.source))
 
@@ -148,12 +148,12 @@ if __name__ == "__main__":
         "annotations": panoptic_annotations
     }
 
-    with open('coco_' + args.batch + '.json'.format(ROOT_DIR), 'w') as output_json_file:
+    with open(os.path.join(ROOT_DIR, 'coco_' + args.batch + '.json'), 'w') as output_json_file:
         json.dump(coco_output, output_json_file)
 
-    with open('panoptic_' + args.batch + '.json'.format(ROOT_DIR), 'w') as output_json_file:
+    with open(os.path.join(ROOT_DIR, 'panoptic_' + args.batch + '.json'), 'w') as output_json_file:
         json.dump(panoptic_output, output_json_file)
 
-    with open('instances_' + args.batch + '.json'.format(ROOT_DIR), 'w') as output_json_file:
+    with open(os.path.join(ROOT_DIR, 'instances_' + args.batch + '.json'), 'w') as output_json_file:
         json.dump(instance_output, output_json_file)
     
