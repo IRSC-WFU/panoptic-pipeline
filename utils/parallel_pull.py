@@ -93,9 +93,9 @@ def process_image(curr_img_info, curr_run, top_dir, start_idx):
                 objectName = imgName + '_' + curr_img_info['Label']['objects'][i]['title'] + '_' + str(curr_id)           
                 mask_name = os.path.join(top_dir, 'annotations', objectName + '.png')
                 mask = requests.get(curr_img_info['Label']['objects'][i]['instanceURI'], stream=True)  
-                            
+                print(curr_img_info['Label']['objects'][i]['instanceURI'])
                 with open(mask_name, 'wb') as k:
-                    for chunk in mask.iter_content(chunk_size=1024): 
+                    for chunk in mask.iter_content(chunk_size=1024):
                         # writing one chunk at a time to image file 
                         if chunk: 
                             k.write(chunk)
@@ -107,6 +107,8 @@ def process_image(curr_img_info, curr_run, top_dir, start_idx):
 
                     curr_id+=1
                 except:
+                    print('Removing mask ' + str(mask_name))
+                    print(traceback.format_exc())
                     os.remove(mask_name)
 
             list_of_masks = []

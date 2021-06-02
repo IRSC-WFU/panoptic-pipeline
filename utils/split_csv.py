@@ -17,13 +17,12 @@ if __name__ == '__main__':
     parse.add_argument("-b","--base",dest="base",help="Base Directory Name", default='images')
     parse.add_argument("-t","--target",dest="target",help="Target Directory Name", default='data')
     parse.add_argument("-c","--categories",dest="categories",help="Categories JSON File", default='panoptic_coco_categories.json')
-    parse.add_argument("-s","--seed",dest="seed",help="Random Seed to Use", default=42)
+    parse.add_argument("-i","--input",dest="input",help="Input csv file with image names in first column and train, test, or validation in second column", default=None)
     args = parse.parse_args()
 
 
     base_dir = str(args.base)
     target_dir = str(args.target)
-    seed = int(args.seed)
 
     with open(args.categories, 'r') as f:
         CATEGORIES = json.load(f)
@@ -55,8 +54,11 @@ if __name__ == '__main__':
         if not os.path.exists(os.path.join(target_dir, curr_split,'annotations')):
             os.makedirs(os.path.join(target_dir, curr_split,'annotations'))
 
-    train_images, val_images = train_test_split(os.listdir(os.path.join(base_dir, 'images')), test_size=0.40, shuffle=True, random_state=seed)
-    val_images, test_images = train_test_split(val_images, test_size=0.20, shuffle=True, random_state=seed)
+    split_data = pd.read_csv(str(args.input))
+
+    train_images = split_data[split_data['Split'] == 'train']['Name'].values
+    val_images = split_data[(split_data['Split'] == 'validation') | (split_data['Split'] == 'val')]['Name'].values
+    test_images = split_data[split_data['Split'] == 'test']['Name'].values
 
     train_names = [os.path.splitext(i)[0] for i in train_images]
     test_names = [os.path.splitext(i)[0] for i in test_images]
