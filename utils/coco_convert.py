@@ -26,14 +26,13 @@ LICENSES = [
 ]
 
 with open('panoptic_coco_categories.json', 'r') as f:
-        CATEGORIES = json.load(f)
+    CATEGORIES = json.load(f)
 
 def filter_for_jpeg(root, files):
     file_types = ['*.jpeg', '*.jpg', '*.png', '*.tif', '*.TIF']
     file_types = r'|'.join([fnmatch.translate(x) for x in file_types])
     files = [os.path.join(root, f) for f in files]
     files = [f for f in files if re.match(file_types, f)]
-    
     return files
 
 def filter_for_annotations(root, files, image_filename):
@@ -43,14 +42,29 @@ def filter_for_annotations(root, files, image_filename):
     file_name_prefix = basename_no_extension + '.*'
     files = [os.path.join(root, f) for f in files]
     files = [f for f in files if re.match(file_types, f)]
-    files = [f for f in files if re.match(file_name_prefix, os.path.splitext(os.path.basename(f))[0])]
+    files = [f for f in files if re.match(
+                                    file_name_prefix,
+                                    os.path.splitext(os.path.basename(f))[0])
+            ]
 
     return files
 
 if __name__ == "__main__":
     parse = argparse.ArgumentParser()
-    parse.add_argument("-b","--batch",dest="batch",help="train, test, or val",default='train')
-    parse.add_argument("-s","--source",dest="source",help="source directory name",default='annotations')
+    parse.add_argument(
+        "-b",
+        "--batch",
+        dest="batch",
+        help="train, test, or val",
+        default='train'
+    )
+    parse.add_argument(
+        "-s",
+        "--source",
+        dest="source",
+        help="source directory name",
+        default='annotations'
+    )
     args = parse.parse_args()
 
     ROOT_DIR = os.path.join('data', str(args.batch))
@@ -75,9 +89,9 @@ if __name__ == "__main__":
 
     panoptic_annotations = []
 
-    image_id = 1
-    segmentation_id = 1
-    
+    IMAGE_ID = 1
+    SEGMENTATION_ID = 1
+
     # filter for jpeg images
     for root, _, files in os.walk(IMAGE_DIR):
         image_files = filter_for_jpeg(root, files)
@@ -87,11 +101,11 @@ if __name__ == "__main__":
             print('Adding ' + str(image_filename))
             image = Image.open(image_filename)
             image_info = pycococreatortools.create_image_info(
-                image_id, os.path.basename(image_filename), image.size)
+                IMAGE_ID, os.path.basename(image_filename), image.size)
             coco_output["images"].append(image_info)
 
             curr_pan_ann = {
-                        "image_id": image_id,
+                        "IMAGE_ID": IMAGE_ID,
                         "file_name": os.path.basename(os.path.splitext(image_filename)[0]) + '.png',
                         "segments_info": [],
                         }
@@ -102,19 +116,31 @@ if __name__ == "__main__":
 
                 # go through each associated annotation
                 for annotation_filename in annotation_files:
-                    
-                    #print(annotation_filename)
-                    class_id = [x['id'] for x in CATEGORIES if x['name'] == annotation_filename.split('_')[1]][0]
+                    class_id = [x['id']
+                                for x in CATEGORIES
+                                if x['name'] == annotation_filename.split('_')[1]
+                                ][0]
                     print(annotation_filename + '\t' + str(class_id))
 
                     #category_info = {'id': class_id, 'is_crowd': 'crowd' in image_filename}
-                    category_info = {'id': class_id, 'is_crowd': [x['iscrowd'] for x in CATEGORIES if x['name'] == annotation_filename.split('_')[1]][0] == 1}
+                    category_info = {
+                                    'id': class_id,
+                                    'is_crowd': [x['iscrowd']
+                                                for x in CATEGORIES
+                                                if x['name'] == annotation_filename.split('_')[1]
+                                                ][0] == 1
+                                    }
                     binary_mask = np.asarray(Image.open(annotation_filename)
                         .convert('1')).astype(np.uint8)
-                    
+
                     annotation_info = pycococreatortools.create_annotation_info(
-                        int(os.path.splitext(annotation_filename)[0].split('_')[-1]), image_id, category_info, binary_mask,
-                        image.size, tolerance=2)
+                        int(os.path.splitext(annotation_filename)[0].split('_')[-1]),
+                        IMAGE_ID,
+                        category_info,
+                        binary_mask,
+                        image.size,
+                        tolerance=2
+                    )
 
                     if annotation_info is not None:
                         coco_output["annotations"].append(annotation_info)
@@ -134,11 +160,11 @@ if __name__ == "__main__":
                     else:
                         print('\tError with annotation ' + annotation_filename)
 
-                    segmentation_id = segmentation_id + 1
+                    SEGMENTATION_ID = SEGMENTATION_ID + 1
 
             panoptic_annotations.append(curr_pan_ann)
 
-            image_id = image_id + 1
+            IMAGE_ID = IMAGE_ID + 1
 
     panoptic_output = {
         "info": INFO,
