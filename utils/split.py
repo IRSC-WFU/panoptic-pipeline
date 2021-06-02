@@ -17,6 +17,7 @@ if __name__ == '__main__':
     parse.add_argument("-b","--base",dest="base",help="Base Directory Name", default='images')
     parse.add_argument("-t","--target",dest="target",help="Target Directory Name", default='data')
     parse.add_argument("-c","--categories",dest="categories",help="Categories JSON File", default='panoptic_coco_categories.json')
+    parse.add_argument("-o","--output",dest="output",help="Output csv file", default='split_record.csv')
     parse.add_argument("-s","--seed",dest="seed",help="Random Seed to Use", default=42)
     args = parse.parse_args()
 
@@ -94,6 +95,14 @@ if __name__ == '__main__':
             if os.path.basename(img).split('_')[1] in cat_list:
                 shutil.copyfile((os.path.join(anno_dir,img)), os.path.join(dest_dir, 'annotations', os.path.basename(img)))
                 data_dict[curr_split][cat_list.index(os.path.basename(img).split('_')[1])]+= 1
-           
+    
+    data_dict = {
+                'Name'  : train_images + val_images + test_images,
+                'Split' : ['train']*len(train_images) + ['validation']*len(val_images) + ['test']*len(test_images)
+                }
+
+    record_data = pd.DataFrame.from_dict(data_dict)
+    record_data.to_csv(str(args.output), index=False)
+
     cat_df = pd.DataFrame(data_dict, index=cat_list)
     print(cat_df)
