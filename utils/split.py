@@ -148,14 +148,14 @@ if __name__ == '__main__':
                 IDX = cat_list.index(os.path.basename(img).split('_')[1])
                 data_dict[curr_split][IDX]+= 1
 
-    data_dict = {
+    split_data = {
                 'Name'  : train_images + val_images + test_images,
                 'Split' : ['train']*len(train_images) +
                         ['validation']*len(val_images) +
                         ['test']*len(test_images)
                 }
 
-    record_data = pd.DataFrame.from_dict(data_dict)
+    record_data = pd.DataFrame.from_dict(split_data)
     record_data.to_csv(str(args.output), index=False)
 
     cat_df = pd.DataFrame(data_dict, index=cat_list)
