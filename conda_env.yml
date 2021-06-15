@@ -1,4 +1,4 @@
-name: pauca
+name: panoptic-pipeline
 channels:
   - pytorch
   - conda-forge
