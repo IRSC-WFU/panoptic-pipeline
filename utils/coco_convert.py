@@ -105,7 +105,7 @@ if __name__ == "__main__":
             coco_output["images"].append(image_info)
 
             curr_pan_ann = {
-                        "IMAGE_ID": IMAGE_ID,
+                        "image_id": IMAGE_ID,
                         "file_name": os.path.basename(os.path.splitext(image_filename)[0]) + '.png',
                         "segments_info": [],
                         }
