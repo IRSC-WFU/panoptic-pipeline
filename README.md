@@ -53,7 +53,7 @@ Make sure UPSNet is installed and initialized as described in [installation](#in
 2. Run `cp examples/shapes/panoptic_coco_categories.json .` to copy the `panoptic_coco_categories.json` file to the top directory.
 3. Run `utils/split.py` to create a train-val-test split on the dataset.
 4. Run `bash utils/link.sh` to generate important JSON files, move them, and symlink the generated data.
-5. Run `bash UPSNET/init_dataset.sh`.
+5. Run `bash UPSNet/init_dataset.sh`.
 6. Run `bash slurm/panoptic.slurm` to train the model. Please be sure to modify `CUDA_VISIBLE_DEVICES` and the shapes config file in `panoptic-pipelines/experiments` to reflect your system.
 7. Run `bash slurm/panoptic_test.slurm` to train the model. Please be sure to modify `CUDA_VISIBLE_DEVICES` and the shapes config file in `panoptic-pipelines/experiments` to reflect your system.
 
@@ -65,7 +65,7 @@ Make sure UPSNet is installed and initialized as described in [installation](#in
 3. Run `cp examples/mining/panoptic_coco_categories.json .` to copy the `panoptic_coco_categories.json` file to the top directory.
 4. Run `utils/split.py` to create a train-val-test split on the dataset.
 5. Run `bash utils/link.sh` to generate important JSON files, move them, and symlink the generated data.
-6. Run `bash UPSNET/init_dataset.sh`.
+6. Run `bash UPSNet/init_dataset.sh`.
 7. Run `bash slurm/panoptic.slurm` to train the model. Please be sure to modify `CUDA_VISIBLE_DEVICES` and the mining config file in `panoptic-pipelines/experiments` to reflect your system.
 8. Run `bash slurm/panoptic_test.slurm` to train the model. Please be sure to modify `CUDA_VISIBLE_DEVICES` and the mining config file in `panoptic-pipelines/experiments` to reflect your system.
 
@@ -76,11 +76,11 @@ Please see the [UPSNet](https://github.com/uber-research/UPSNet) repository and 
 Make sure UPSNet is installed and initialized as described in [installation](#installation). All scripts should be run from the `panoptic-pipeline` directory. Additionally, note that UPSNet (and panoptic segmentation in general) requires that binary masks provided are non-overlapping. If this is not the case, we cannot guarantee that the scripts will run and cannot trust the validity of the results.
 
 1. If annotations are stored in the "segmentations" format in LabelBox, the generate your segmentation output file and store it in the top directory as `info.json`. If annotations are already in a binary mask format, please copy the images to `panoptic-pipeline/images` and the masks to `panoptic-pipeline/annotations` and skip to step 3.
-2. Run `python parallel_pull.py` to pull all required files from LabelBox.
+2. Run `python utils/parallel_pull.py` to pull all required files from LabelBox.
 3. Use either `examples/mining/panoptic_coco_categories.json` or `examples/shapes/panoptic_coco_categories.json` to create your own `panoptic_coco_categories.json` file in the top directory. Please notice the difference between "things" and "stuff" classes (documented in [COCO](https://cocodataset.org/)).
 4. Run `utils/split.py` to create a train-val-test split on the dataset.
 5. Run `bash utils/link.sh` to generate important JSON files, move them, and symlink the generated data.
-6. Run `bash UPSNET/init_dataset.sh`.
+6. Run `bash UPSNet/init_dataset.sh`.
 7. Run `bash slurm/panoptic.slurm` to train the model. Please be sure to modify `CUDA_VISIBLE_DEVICES` and a custom config file in `panoptic-pipelines/experiments` to reflect your system and classes.
 8. Run `bash slurm/panoptic_test.slurm` to train the model. Please be sure to modify `CUDA_VISIBLE_DEVICES` and a custom config file in `panoptic-pipelines/experiments` to reflect your system and classes.
 
