@@ -5,6 +5,12 @@ TOP=$(pwd)
 BASE=$TOP
 COCO=$TOP/UPSNet/data/coco
 
+# Modify filenames to work with Python re
+# Note this replaces characters that could interfere with regexes
+python $TOP/utils/name_convert.py -g train
+python $TOP/utils/name_convert.py -g val
+python $TOP/utils/name_convert.py -g test
+
 # Convert Coco Files
 python $TOP/utils/coco_convert.py -b train
 python $TOP/utils/coco_convert.py -b val
