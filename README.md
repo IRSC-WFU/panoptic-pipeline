@@ -5,7 +5,7 @@ This repository exists to take the UPSNet Panoptic Segmentation algorithm and al
 
 # License
 Code in `panoptic-pipeline/utils/upsnet-custom` is offered under © Uber, 2018-2019. Licensed under the Uber Non-Commercial License.
-All other code is made availible under 
+All other code is made availible under a BSD 3-Clause License.
 
 # Citing panoptic-pipeline
 
