@@ -24,8 +24,13 @@ def rgb2id(color):
     return int(color[0] + 256 * color[1] + 256 * 256 * color[2])
 
 def processMask(mask,color):
-    mask[np.where((mask == [255,255,255] ).all(axis = 2))] = color
-    return mask
+    #temp_arr = np.where(np.array(mask == [255,255,255]).all(axis = 2))
+    #temp_arr = np.where(mask == 255)
+
+    #mask[temp_arr] = color
+    temp_arr = np.zeros((mask.shape[0], mask.shape[1], 3), dtype=np.uint8)
+    temp_arr[mask] = color
+    return temp_arr
 
 def id2rgb(id_map):
     if isinstance(id_map, np.ndarray):
@@ -59,10 +64,12 @@ if __name__ == '__main__':
     for backgroundfile in os.listdir(imgfolder):
         print('Masking ' + str(backgroundfile))
         backgroundfile1 = backgroundfile.split('.')
-        background = cv2.imread(os.path.join(imgfolder,backgroundfile))
-        height= background.shape[0]
-        width= background.shape[1]
-        background = np.zeros([height,width,3],dtype=np.uint8)
+        #background = cv2.imread(os.path.join(imgfolder,backgroundfile))
+        background = np.array(Image.open(os.path.join(imgfolder,backgroundfile)))
+        width = background.shape[0]
+        height = background.shape[1]
+        background = np.zeros([width,height,3],dtype=np.uint8)
+        #background = np.zeros([width,height,3],dtype=np.uint8)
         background.fill(0)
         
         masks = []
@@ -71,7 +78,9 @@ if __name__ == '__main__':
             filename1 = filename.split('_')
             filetem = filename.split('.')
             if filename1[0] == backgroundfile1[0]:
-                img = cv2.imread(os.path.join(folder,filename))
+                #img = cv2.imread(os.path.join(folder,filename))
+                #img = np.array(Image.open(os.path.join(folder,filename))).astype('uint8')*255
+                img = np.array(Image.open(os.path.join(folder,filename)))
                 #img = np.array(Image.open(os.path.join(folder,filename)))
                 #img = processMask(img,label_to_color(filename1[1]))
                 #color = label_to_color(os.path.splitext(filename)[0].split('_')[-1])
@@ -79,9 +88,7 @@ if __name__ == '__main__':
                 #id_list.append(int(os.path.splitext(filename)[0].split('_')[-1]))
                 id_list.append(filename)
                 assert rgb2id(color) == int(os.path.splitext(filename)[0].split('_')[-1])
-                
                 img = processMask(img,color)
-                
                 masks.append(img)
             
         i=0

@@ -104,7 +104,7 @@ if __name__ == "__main__":
                     
                     #print(annotation_filename)
                     class_id = [x['id'] for x in CATEGORIES if x['name'] == annotation_filename.split('_')[1]][0]
-                    print(annotation_filename + '\t' + str(class_id))
+                    print('\t' + str(annotation_filename) + '\t\t' + str([x['name'] for x in CATEGORIES if x['name'] == annotation_filename.split('_')[1]][0]) + '\t' + str(class_id))
 
                     #category_info = {'id': class_id, 'is_crowd': 'crowd' in image_filename}
                     category_info = {'id': class_id, 'is_crowd': [x['iscrowd'] for x in CATEGORIES if x['name'] == annotation_filename.split('_')[1]][0] == 1}

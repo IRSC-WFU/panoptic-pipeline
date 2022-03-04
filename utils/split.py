@@ -47,6 +47,7 @@ if __name__ == '__main__':
         "--seed",
         dest="seed",
         help="Random Seed to Use",
+        type=int,
         default=42
     )
     args = parse.parse_args()
@@ -84,7 +85,7 @@ if __name__ == '__main__':
             os.makedirs(os.path.join(TARGET_DIR, curr_split,'images'))
         if not os.path.exists(os.path.join(TARGET_DIR, curr_split,'annotations')):
             os.makedirs(os.path.join(TARGET_DIR, curr_split,'annotations'))
-
+    print(os.path.join(BASE_DIR, 'images'))
     train_images, val_images = train_test_split(
                                     os.listdir(os.path.join(BASE_DIR, 'images')),
                                     test_size=0.40,
@@ -93,7 +94,7 @@ if __name__ == '__main__':
                                 )
     val_images, test_images = train_test_split(
                                     val_images,
-                                    test_size=0.20,
+                                    test_size=0.40,
                                     shuffle=True,
                                     random_state=seed
                                 )

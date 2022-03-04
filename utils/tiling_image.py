@@ -7,11 +7,10 @@ import numpy
 import sys
 
 
-
 if __name__ == '__main__':
 
     
-    top_dir = "/deac/generalGrp/paucaGrp/dark_mining/Panoptic-Segmentation-for-Dark-Mining"
+    top_dir = "/deac/generalGrp/paucaGrp/dark_mining/panoptic-pipeline"
     img_folder = os.path.join(top_dir, "images/images")
     anno_folder = os.path.join(top_dir, "images/annotations")
  
@@ -19,8 +18,8 @@ if __name__ == '__main__':
     x = int(sys.argv[1])
     y = int(sys.argv[2])
     
-    new_img_folder = os.path.join(top_dir, 'images-t-' + sys.argv[1] + "*" + sys.argv[2] + "/images")
-    new_ano_folder = os.path.join(top_dir, 'images-t-' + sys.argv[1] + "*" + sys.argv[2] + "/annotations")
+    new_img_folder = os.path.join(top_dir, 'images-t-' + sys.argv[1] + "_" + sys.argv[2] + "/images")
+    new_ano_folder = os.path.join(top_dir, 'images-t-' + sys.argv[1] + "_" + sys.argv[2] + "/annotations")
     if not os.path.exists(new_img_folder):
         os.makedirs(new_img_folder)
     
