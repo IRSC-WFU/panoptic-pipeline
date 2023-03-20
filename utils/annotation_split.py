@@ -74,15 +74,15 @@ if __name__ == '__main__':
         for p in jobs:
             p.join()
 
-for root, _, files in os.walk('images/annotations'):
-    png_files = [i for i in files if ".png" in i]
+    for root, _, files in os.walk('images/annotations'):
+        png_files = [i for i in files if ".png" in i]
 
-    object_count = 0
+        object_count = 0
 
-    for name in png_files:
-        new_name = '_'.join(name.split('_')[:-2]) + '_' + str(object_count) + os.path.splitext(name)[1]
-        os.rename(os.path.join(root,name), os.path.join(root,new_name))
-        object_count+=1
+        for name in png_files:
+            new_name = '_'.join(name.split('_')[:-2]) + '_' + str(object_count) + os.path.splitext(name)[1]
+            os.rename(os.path.join(root,name), os.path.join(root,new_name))
+            object_count+=1
         
 
 
